@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyển đổi PDF sang Word và Xem Tệp Word</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: url('img1.jpg') no-repeat;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 800px;
+            box-sizing: border-box;
+            background: transparent;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            color: #000000;
+           
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .instructions {
+            margin-top: 20px;
+        }
+        .highlight {
+            background-color: #e3f2fd;
+            cursor: pointer;
+        }
+        .file-input {
+            margin-top: 10px;
+            padding: 8px;
+            font-size: 16px;
+        }
+        #output {
+            background-color: #ffffff;
+            width: 794px; /* Kích thước chiều rộng A4 */
+            min-height: 1123px; /* Kích thước chiều cao A4 */
+            padding: 40px; /* Khoảng trống xung quanh nội dung */
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        nav {
+            position: fixed; /* Cố định thanh điều hướng ở trên cùng */
+            top: 0; /* Đặt thanh ở trên cùng */
+            left: 0; /* Căn lề trái bằng 0 */
+            width: 100%; /* Chiều rộng 100% */
+            background-color: #333; /* Màu nền cho thanh điều hướng */
+            z-index: 1000; /* Đặt độ ưu tiên cao hơn cho thanh điều hướng */
+            overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
+            padding: 0; /* Bỏ khoảng đệm */
+        }
+
+        nav a {
+            float: left;
+            /* Căn từng mục điều hướng sang bên trái */
+            display: block;
+            /* Đặt liên kết thành khối để có thể điều chỉnh kích thước và vị trí */
+            color: white;
+            /* Đặt màu chữ trắng cho các liên kết */
+            text-align: center;
+            /* Căn giữa chữ bên trong từng mục điều hướng */
+            padding: 14px 20px;
+            /* Thêm khoảng đệm vào từng mục điều hướng */
+            text-decoration: none;
+            /* Bỏ gạch chân dưới các liên kết */
+        }
+
+        nav a:hover {
+            background-color: #ff8cbb;
+            /* Đổi màu nền khi di chuột qua */
+            color: white;
+            /* Giữ màu chữ trắng khi di chuột */
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <nav>
+        <a href="#" onclick="showSection('gioithieu')">Giới thiệu</a>
+        <a href="#" onclick="showSection('noidung')">Nội dung chính</a>
+        <a href="https://www.google.com" target="_blank">Google</a>
+        <a href="mailto:lhan19277@gmail.com">Liên hệ</a>
+    </nav>
+
+    <header>
+        <h1>Chào mừng bạn đến với trang web của tôi!</h1>
+    </header>
+
+    <section id="gioithieu" class="active"> <!-- Hiển thị phần giới thiệu đầu tiên -->
+        <h2>Giới thiệu</h2>
+        <p>Đây là trang web đầu tiên của tôi, được xây dựng bằng HTML và CSS cơ bản.</p>
+    </section>
+
+    <section id="noidung">
+
+    
+        <!-- Phần Chuyển Đổi PDF Sang Word -->
+        <div class="container">
+            <h1>Chuyển đổi PDF sang Word</h1>
+            <p>Nhấn nút dưới đây để chuyển đổi PDF sang Word sử dụng ilovepdf.</p>
+            <a href="https://www.ilovepdf.com/vi/pdf-sang-word" class="btn" target="_blank">Chuyển đổi ngay</a>
+            
+            <div class="instructions">
+                <h2>Hướng dẫn mở file Word:</h2>
+                <p>Sau khi tải về file Word từ ilovepdf, bạn có thể mở file đó trên:</p>
+                <ul>
+                    <li><a href="https://docs.google.com/" target="_blank" class="highlight">Google Docs</a></li>
+                    <li>Mở trên máy tính của bạn bằng <span class="highlight">Microsoft Word</span> hoặc các phần mềm tương tự.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Phần Tải Lên và Xem Tệp Word -->
+        <div class="container">
+            <h1>Chọn và Mở Tệp Word</h1>
+            <input type="file" id="fileInput" class="file-input" accept=".docx">
+        </div>
+
+        <!-- Phần hiển thị nội dung của tệp Word -->
+        <div id="output">Nội dung tệp sẽ hiển thị ở đây sau khi bạn chọn tệp.</div>
+
+        <!-- Thư viện Mammoth.js và JavaScript xử lý tệp Word -->
+        <script>
+            document.getElementById("fileInput").addEventListener("change", function(event) {
+                const file = event.target.files[0];
+                if (file && file.name.endsWith(".docx")) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const arrayBuffer = e.target.result;
+                        mammoth.convertToHtml({arrayBuffer: arrayBuffer})
+                            .then(displayResult)
+                            .catch(handleError);
+                    };
+                    reader.readAsArrayBuffer(file);
+                } else {
+                    alert("Vui lòng chọn một tệp Word (.docx) hợp lệ.");
+                }
+            });
+
+            function displayResult(result) {
+                document.getElementById("output").innerHTML = result.value;
+            }
+
+            function handleError(err) {
+                console.error("Có lỗi xảy ra:", err);
+                document.getElementById("output").innerText = "Không thể đọc tệp. Vui lòng thử lại với tệp khác.";
+            }
+        </script>
+    </section>
+
+    <section id="lienhe">
+        <h2>Liên hệ</h2>
+        <p>Gửi email đến <a href="mailto:lhan19277@gmail.com">lhan19277@gmail.com</a> để liên lạc.</p>
+    </section>
+    
+    
+    
+
+</body>
+</html>
